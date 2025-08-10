@@ -33,7 +33,7 @@ export async function runAi({ model, inputs, stream = false }: RunAiOptions) {
   // Construct the full URL for the model endpoint via the gateway
   const modelUrl = new URL(model, CLOUDFLARE_AI_GATEWAY_URL).href;
 
-  const body = stream && model.includes('llama') ? { ...inputs, stream: true } : inputs;
+  const body = (model.includes('llama') && stream) ? { ...inputs, stream: true } : inputs;
 
   const response = await fetch(modelUrl, {
     method: 'POST',
